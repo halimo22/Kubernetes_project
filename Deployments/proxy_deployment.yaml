@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: proxy-deployment
-  namespace: default
+  namespace: webapp
   labels:
     app: proxy-deployment
 spec:
