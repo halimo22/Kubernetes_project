@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: backendservice
-  namespace: default
+  namespace: webapp
 spec:
   selector:
     app: backend
