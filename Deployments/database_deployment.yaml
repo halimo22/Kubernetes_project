@@ -9,7 +9,7 @@ spec:
   selector:
     matchLabels:
       app: database
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -19,22 +19,22 @@ spec:
       - name: db-password
         secret:
           secretName: db-secret
-      - name: pre-install
-        emptyDir: {}
       - name: db-data
         persistentVolumeClaim:
           claimName: db-pvc
       containers:
       - name: database
-        image: database
-        imagePullPolicy: Never
-        command: ['sh', '-c', 'cat /db-secret/db-password >> /run/secrets/db-password']
+        image: mysql:8.0
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: db-password
+        - name: MYSQL_DATABASE
+          value: "example"
         ports:
         - containerPort: 3306
         volumeMounts:
-        - name: pre-install
-          mountPath: "/run/secrets"
-        - name: db-password
-          mountPath: "/db-secret"
         - name: db-data
           mountPath: "/var/lib/mysql"

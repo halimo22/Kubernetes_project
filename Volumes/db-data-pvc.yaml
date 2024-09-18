@@ -3,12 +3,10 @@ kind: PersistentVolumeClaim
 metadata:
   name: db-pvc
   namespace: default
-  labels:
-    app: db-pvc
 spec:
-  storageClassName: ""
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
+  storageClassName: standard
   resources:
     requests:
       storage: 5Gi
